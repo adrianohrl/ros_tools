@@ -50,18 +50,17 @@ def generate_message_from_message_name(package_name, message_name):
 def generate_message_from_package(package_name):
 	print 'Gera as mensagens de todo o pacote %s' % package_name
 	
-
 def locate(file_name, root = os.curdir):
 	for c in os.listdir(root):
-		if c == ".git":
-			continue;
-		candidate = os.path.join(root, c)
+		if c.startswith("."):
+			continue
+	   candidate = os.path.join(root, c)
 		if not os.path.isfile(candidate):
 			candidate = locate(file_name, candidate)
 			if candidate is not None:
 				return candidate
 		elif c == file_name:
-				return candidate
+			   return candidate
 	return None
 
 if len(sys.argv) == 2:
