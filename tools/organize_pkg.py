@@ -23,11 +23,11 @@ class Package:
 		return s
 	def __str__(self):
 		s = "\tname: '%s',\n\tpath: '%s',\n\tfolders:" % (self.name, self.path)
-		self.folders.sort()
+		self.folders.sort(key=lambda x: x.name)
 		for folder in self.folders:
 			s += "\n%s" % folder
 		if not self.isOrganized():
-			self.duplicated_files.sort()
+			self.duplicated_files.sort(key=lambda x: x.name)
 			s += "\n\tduplicated files:"
 			for file in self.duplicated_files:
 				s += "\n\t\t%s" % file
@@ -51,14 +51,9 @@ class Package:
 				return folder
 		return None
 	def move(self, file, origin, destiny):
-		for i in range(len(self.files_to_be_moved)):
-			if self.files_to_be_moved[i].name == file.name:
-				del self.files_to_be_moved[i]
-				break
 		if self.isDuplicated(file):
 			self.duplicated_files.append(file)
 		else:
-			#print "-------moving %s from %s to %s" % (file.name, file.path, os.path.join(destiny.path, file.name)) ###############################################3
 			os.rename(file.path, os.path.join(destiny.path, file.name))
 			package.appendFile(file, destiny)
 		folder = self.getFolder(origin.name);
@@ -69,6 +64,8 @@ class Package:
 			if self.folders[i].name == folder_name:
 				del self.folders[i]
 				return
+	def clear(self):
+		self.files_to_be_moved = list()
 	def isDuplicated(self, file):
 		folder = self.getFolder(self.extensions[file.extension])
 		return folder and folder.isDuplicated(file.name)
@@ -89,7 +86,7 @@ class Folder:
 		return "%s @ %s: %s" % (self.name, path, self.files)
 	def __str__(self):
 		s = "\t\tname: '%s',\n\t\tpath: '%s',\n\t\tfiles:" % (self.name, self.path)
-		self.files.sort()
+		self.files.sort(key=lambda x: x.name)
 		for file in self.files:
 			s += "\n\t\t\t%s" % file
 		return s
@@ -165,7 +162,6 @@ def locate(package, extension, root = os.curdir, files = list()):
 		elif c.endswith(extension):
 			folder = Folder(os.path.basename(root), root)
 			file = File(c, extension, folder)
-			#print "\textension: %s,\n\tfile: %s,\n\tfolder:\n%s,\n\troot: %s" % (extension, file, folder, root) ###############################
 			package.appendFile(file, folder)
 			files.append(file)
 	return files
@@ -175,9 +171,6 @@ def organize(package, report):
 		print "Processing %s package..." % package.name
 	for extension, folder_name in package.extensions.items():
 		files = locate(package, extension, package.path)
-		#print "---------------------------------------------------------------"
-		#print "the located %s files:\n%s\n" % (extension, files) ################################################3
-		#print "the %s files to be moved (before):\n%s\n" % (extension, package.files_to_be_moved) ###################################33
 		if not files:
 			if report:
 				print "[WARN] None %s file was found in the %s package." % (extension.upper(), package.name)
@@ -189,8 +182,7 @@ def organize(package, report):
 				folder = create(folder_name, package, report)	
 				for file in package.files_to_be_moved:
 				 	move(file, folder, package, report)
-		#print "---------------------------------------------------------------"
-		#print "the %s files to be moved (after):\n%s\n" % (extension, package.files_to_be_moved) ###################################33
+				package.clear()
 		del files[:]
 	for folder in package.folders:
 		if folder.isEmpty():
