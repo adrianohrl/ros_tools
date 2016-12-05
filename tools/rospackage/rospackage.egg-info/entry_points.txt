@@ -1,7 +1,0 @@
-[console_scripts]
-rospackage = rospackage.commands.rospackage:main
-
-[rospackage.commands.rospackage.verbs]
-create = rospackage.verbs.rospackage_create:entry_point_data
-organize = rospackage.verbs.rospackage_organize:entry_point_data
-
