@@ -1,2 +1,4 @@
 *~
 test_pkg/*
+*.pyc
+*.egg-info/*

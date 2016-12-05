@@ -1,0 +1,15 @@
+Metadata-Version: 1.1
+Name: rospackage
+Version: 0.1.0
+Summary: Command line tools for working with ROS packages.
+Home-page: https://github.com/Expertinos
+Author: Adriano H. R. Leite, Ricardo E. Julio, UNIFEI Expertinos Team
+Author-email: adrianohrl@unifei.edu.br, ricardoej@gmail.com, expertinos.unifei@gmail.com
+License: Apache 2.0
+Description: Provides command line tools for working with ROS packages.
+Keywords: rospackage,ROS,catkin
+Platform: UNKNOWN
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python

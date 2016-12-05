@@ -1,0 +1,5 @@
+rospkg
+catkin_pkg
+osrf_pycommon
+pyyaml
+setuptools
