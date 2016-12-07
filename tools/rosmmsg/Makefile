@@ -4,12 +4,13 @@ NAME=rospackage
 VERSION=`./setup.py --version`
 
 all:
-	echo "noop for debuild"
+	echo "noop for debbuild"
 
 setup:
 	echo "building version ${VERSION}"
 
 clean_dist:
+	rm -rf dist
 	rm -rf ${NAME}.egg-info
 
 distro: setup clean_dist

@@ -2,8 +2,7 @@
 
 Command line tools for working with ROS packages.
 
-Installation
-------------
+## Installation
 
 for users:
 
@@ -13,7 +12,11 @@ for developers:
 
 	sudo python setup.py develop
 
-Usage
------
+## Usage
 
+	rospackage build ...
+	rospackage config ...
+	rospackage create ...
+	rospackage list ...
 	rospackage organize -p test_pkg --all
+	rospackage organize -p test_pkg -e yaml rviz -f config -e action launch msg srv

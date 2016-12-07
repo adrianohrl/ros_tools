@@ -1,6 +1,6 @@
 .PHONY: all setup clean_dist distro clean install install_user
 
-NAME=rospackage
+NAME=rosorm
 VERSION=`./setup.py --version`
 
 all:
